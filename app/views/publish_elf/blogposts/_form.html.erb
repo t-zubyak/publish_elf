@@ -1,0 +1,56 @@
+<%= simple_form_for @post, html: {class: 'form-horizontal'} do |f| %>
+  <%= f.error_notification %>
+  <div class="form-group">
+    <%= f.label :title, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-10">
+      <%= f.input :title, autofocus: true, label: false, input_html: { class: 'form-control' } %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :status, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-10">
+      <%= f.input :status, collection: ["draft", "published"], label: false, include_blank: false, input_html: { class: 'form-control' } %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :posted_on, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-10">
+      <%= f.input :posted_on, as: :string, label: false, input_html: { class: 'form-control', data: { behaviour: 'datepicker'}} %>
+    </div>
+  </div>
+  <div class="post_form_body">
+    <div class="form-group">
+      <%= f.label :body, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-10">
+        <% if @post.new_record? || @post.json_body? %>
+          <%= f.text_area :body %>
+        <% else %>
+          <%= f.input :body, label: false, input_html: {class: 'form-control', rows: 10} %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :tag_list, "Tags (separated by commas)", class: 'col-sm-2 control-label' %>
+    <div class="col-sm-10">
+      <%= f.input :tag_list, label: false, input_html: { class: 'form-control'} %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :user, "Author", class: 'col-sm-2 control-label' %>
+    <div class="col-sm-10">
+      <%= f.association :user, collection: User.publishers.collect{|u| [u.full_name, u.id]}, label: false, include_blank: false, selected: @post.user.present? ? @post.user.id : current_user.id, input_html: { class: 'form-control'} %>
+    </div>
+  </div>
+  <%= f.submit "Save", class: 'btn btn-primary' %>
+<% end %>
+
+<script>
+$(function(){
+  var editor = new SirTrevor.Editor({
+    el: $('#blogpost_body'),
+    blockTypes: ["Heading", "Text", "List", "Quote", "Image", "Video"],
+    uploadUrl: "/blogposts/image_upload"
+  });
+});
+</script>

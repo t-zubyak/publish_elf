@@ -1,0 +1,29 @@
+<%= render 'publish_elf/blogposts/mailchimp' %>
+
+<div class="pull-right actions">
+  <%= link_to 'New Post', new_blogpost_path, class: 'btn btn-primary' if can_manage_blogposts? %>
+</div>
+<div class="clearfix"></div><br/>
+
+<% if @custom_title.present? %>
+  <h1><%= @custom_title %></h1><br/>
+<% end %>
+
+<% if @posts.empty? %>
+  <div class="alert alert-info">There are no posts yet, check back soon!</div>
+<% else %>
+  <% @posts.each_with_index do |post, i| %>
+    <div class="widget widget-heading-simple widget-body-white">
+  		<div class="widget-body">
+  			<div class="row-fluid">
+  				<div class="span12 blog">
+  					<h2><%= link_to post.title, post %></h2>
+  					<%= render "short_post", post: post %>
+            <%= link_to "Read - #{post.title}", post, class: "btn btn-primary" %>
+  				</div>
+  			</div>
+  		</div>
+  	</div>
+  <% end %>
+  <%= will_paginate @posts %>
+<% end %>

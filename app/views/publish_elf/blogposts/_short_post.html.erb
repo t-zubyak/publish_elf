@@ -1,0 +1,13 @@
+<span class="glyphicons single regular user"><i></i> by <a href="/blog/by/<%= post.user.try(:full_name).try(:parameterize) %>"><%= post.user.try(:full_name) %></a></span>
+<% if post.published? %>
+<span class="glyphicons single regular calendar"><i></i> on <%= post.posted_on.strftime('%b %e, %Y') %>  </span>
+<% elsif post.status == 'draft' %>
+<em>Draft</em>
+<% else %>
+<span class="glyphicons single regular calendar"><i></i> <em>Will be published on <%= post.posted_on.strftime('%b %e, %Y') %></em> </span>
+<% end %>
+
+<%= content_tag(:small, link_to('Edit', edit_blogpost_path(post))) if can? :edit, post %>
+<div class="separator bottom"></div>
+
+<%#= wrap_images_with_links( render_short_post_body(post.body), post ).html_safe %>

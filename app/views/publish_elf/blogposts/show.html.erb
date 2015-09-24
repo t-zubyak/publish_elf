@@ -1,0 +1,51 @@
+<%# title ['Blog', @post.title] %>
+<%# set_meta_tags :description => strip_tags(render_post_body(@post.body)).truncate(240), :keywords => @post.tag_list.join(", ") %>
+
+<%= render @post %>
+<% unless @post.tag_list.blank? %>
+  <p><strong>Tags:</strong>
+    <% @post.tag_list.each do |tag| %>
+      <%= link_to tag, "/blog/tags/#{tag.parameterize}" %>&nbsp; &nbsp;
+    <% end %>
+  </p>
+<% end %>
+
+<% if @post.user.try(:author_bio).present? %>
+<div class="post_author">
+  <div class="row-fluid">
+    <div class="span2">
+      <%= image_tag @post.user.try(:author_avatar_url).present? ? @post.user.author_avatar_url : image_path("missing_avatar.jpg"), class: "img-circle author_avatar pull-right" %>
+    </div>
+    <div class="span10">
+      <p class="lead">About The Author</p>
+      <%= @post.user.author_bio.html_safe %>
+    </div>
+  </div>
+</div>
+<% end %>
+<div class="row-fluid">
+  <span class="span12 lead text-center">
+    <h3>Explore Our Best Topics</h3>
+    <a href="/blog/tags/business/">Business</a> / <a href="/blog/tags/balanceredo">BalanceReDo</a> / <a href="/blog/tags/new-features/">New Features</a>
+  </span>
+</div>
+<br />
+  <%= render 'publish_elf/blogposts/mailchimp' %>
+<div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'BalanceDo'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+<p>
+<%= link_to "Back to all posts", blogposts_path %>
+</p>
