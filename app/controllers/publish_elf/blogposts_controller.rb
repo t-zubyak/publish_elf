@@ -104,7 +104,7 @@ module PublishElf
     end
 
     def sign_s3
-      bucket_name = AWS_CONFIG[:s3_bucket_name]
+      bucket_name = PUBLISH_ELF_CONFIG[:s3_bucket_name]
       original_name = params['file_name']
       original_extension = original_name.split('.').last
       mime_type = params['file_type']
@@ -112,10 +112,10 @@ module PublishElf
       date = Time.now.utc.iso8601.gsub(/-|:/,'')
       amazon_headers = ["x-amz-acl:public-read","x-amz-date:#{date}"] # set the public read permission on the uploaded file
       string_to_sign = "PUT\n\n#{mime_type}\n\n#{amazon_headers[0]}\n#{amazon_headers[1]}\n/#{bucket_name}/post_images/#{object_name}";
-      signature = Base64.strict_encode64(OpenSSL::HMAC.digest('sha1',  AWS_CONFIG[:aws_secret_access_key], string_to_sign))
+      signature = Base64.strict_encode64(OpenSSL::HMAC.digest('sha1',  PUBLISH_ELF_CONFIG[:aws_secret_access_key], string_to_sign))
       path = "https://s3.amazonaws.com/#{bucket_name}/post_images/#{object_name}"
       r = {
-        signature:  "AWS #{AWS_CONFIG[:aws_access_key_id]}:#{signature}",
+        signature:  "AWS #{PUBLISH_ELF_CONFIG[:aws_access_key_id]}:#{signature}",
         date: date,
         url: path,
       }

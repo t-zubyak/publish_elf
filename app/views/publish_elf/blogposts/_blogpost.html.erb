@@ -1,10 +1,10 @@
-    <span class="glyphicons single regular user"><i></i> by <a href="/blog/by/<%= blogpost.user.try(:full_name).try(:parameterize) %>"><%= blogpost.user.try(:full_name) %></a></span>
+    <span><i class="fa fa-user"></i> by <a href="/blog/by/<%= blogpost.user.try(:full_name).try(:parameterize) %>"><%= blogpost.user.try(:full_name) %></a></span>
   <% if blogpost.published? %>
-    <span class="glyphicons single regular calendar"><i></i> on <%= blogpost.posted_on.strftime('%b %e, %Y') %>  </span>
+    <span><i class="fa fa-calendar"></i> on <%= blogpost.posted_on.strftime('%b %e, %Y') %>  </span>
   <% elsif blogpost.status == 'draft' %>
     <em>Draft</em>
   <% else %>
-    <span class="glyphicons single regular calendar"><i></i> <em>Will be published on <%= blogpost.posted_on.strftime('%b %e, %Y') %></em> </span>
+    <span><i class="fa fa-calendar"></i> <em>Will be published on <%= blogpost.posted_on.strftime('%b %e, %Y') %></em> </span>
   <% end %>
 
   <%= content_tag(:small, link_to('Edit', edit_blogpost_path(blogpost))) if can? :edit, blogpost %>

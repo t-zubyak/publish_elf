@@ -1,27 +1,30 @@
-<% title "BalanceDo Landing Pages" %>
+<div class="row">
+  <div class="col-md-12 landing-container">
+		<h1 class="pull-left">Landing Pages</h1>
 
-<div class="pull-right actions">
-	<%= link_to 'New Page', new_landing_path, class: 'btn btn-primary' if can? :create, Landing %>
-</div>
-
-<% if @landings.empty? %>
-  <div class="alert alert-info">There are no landing pages yet, check back soon!</div>
-<% else %>
-  <% @landings.each do |page| %>
-		<div class="landing_item">
-    	<h2><%= link_to page.title, page %></h2>
-		
-			<% if can? :edit, page %>
-				<%= content_tag(:small, link_to('Edit', edit_landing_path(page))) %><br/>
-			<% end %>
-		
-		  <% unless page.published? %>
-				<p class="muted posted-on">
-		    	<em>Draft</em>
-				</p>
-		  <% end %>
-	
-			<%= strip_tags(page.description) %>   
+		<div class="pull-right actions">
+			<%= link_to 'New Page', new_landing_page_path, class: 'btn btn-primary' if can_manage_landings? %>
 		</div>
-  <% end %>
-<% end %>
+		<div class="clearfix"></div>
+
+		<% if @landings.empty? %>
+		  <div class="alert alert-info">There are no landing pages yet, check back soon!</div>
+		<% else %>
+		  <% @landings.each do |page| %>
+				<div class="landing_item">
+		    	<h2><%= link_to page.title, page %></h2>
+
+					<% if can_manage_landings? %>
+						<%= content_tag(:small, link_to('Edit', edit_landing_page_path(page))) %><br/>
+					<% end %>
+
+				  <% unless page.published? %>
+						<p class="muted posted-on">
+				    	<em>Draft</em>
+						</p>
+				  <% end %>
+				</div>
+		  <% end %>
+		<% end %>
+  </div>
+</div>

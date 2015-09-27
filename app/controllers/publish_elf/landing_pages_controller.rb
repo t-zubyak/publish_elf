@@ -1,5 +1,5 @@
 module PublishElf
-  class LandingsController < ApplicationController
+  class LandingPagesController < ApplicationController
 
     layout :resolve_layout
 
@@ -8,9 +8,9 @@ module PublishElf
 
     def index
       if current_user
-        @landings = current_user.publisher? ? LandingPage.scoped : LandingPage.published
+        @landings = current_user.publisher? ? LandingPage.all : LandingPage.published
       else
-        render_404 and return
+        redirect_to root_path
       end
     end
 
@@ -19,13 +19,10 @@ module PublishElf
     end
 
     def create
-      @landing = LandingPage.new(params[:landing])
+      @landing = LandingPage.new(page_params)
       @landing.page_url = @landing.title.parameterize
-      if params[:previous_background_id].present?
-        @landing.background = LandingPage.find(params[:previous_background_id].gsub("_bg", "")).background
-      end
       if @landing.save
-        redirect_to landings_path, notice: 'Landing page was successfully created.'
+        redirect_to landing_pages_path, notice: 'Landing page was successfully created.'
       else
         render action: "new"
       end
@@ -37,12 +34,8 @@ module PublishElf
 
     def update
       @landing = LandingPage.find(params[:id])
-      if @landing.update_attributes(params[:landing])
-        if params[:previous_background_id].present?
-          @landing.background = LandingPage.find(params[:previous_background_id].gsub("_bg", "")).background
-          @landing.save
-        end
-        redirect_to landings_path, notice: 'Landing page was successfully updated.'
+      if @landing.update_attributes(page_params)
+        redirect_to landing_pages_path, notice: 'Landing page was successfully updated.'
       else
         render action: "edit"
       end
@@ -50,13 +43,13 @@ module PublishElf
 
     def show
       @landing = LandingPage.find(params[:id])
-      render_404 and return if @landing.nil?
+      redirect_to root_path and return if @landing.nil?
     end
 
     def destroy
       @landing = LandingPage.find(params[:id])
       @landing.destroy
-      redirect_to landings_url
+      redirect_to landing_pages_url
     end
 
     private
@@ -68,6 +61,10 @@ module PublishElf
       else
         "public"
       end
+    end
+
+    def page_params
+      params.require(:landing_page).permit(:title, :status, :publish_date, :content, :page_url)
     end
 
   end

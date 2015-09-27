@@ -21,5 +21,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'will_paginate', '>= 3.0'
   s.add_dependency 'acts-as-taggable-on', '>= 3.0'
   s.add_dependency 'sir_trevor_rails'
+  s.add_dependency 'bootstrap-datepicker-rails'
+  s.add_dependency 'font-awesome-rails'
 
 end

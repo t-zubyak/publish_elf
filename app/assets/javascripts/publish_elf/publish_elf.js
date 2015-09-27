@@ -12,3 +12,4 @@
 //
 //= require ./sir-trevor.min
 //= require ./sir_trevor_uploader
+//= require bootstrap-datepicker

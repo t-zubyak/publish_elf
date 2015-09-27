@@ -23,7 +23,7 @@ module PublishElf
 
     def json_body?
       begin
-        JSON.parse body
+        JSON.parse read_attribute_before_type_cast('body')
         return true
       rescue
         return false

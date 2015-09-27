@@ -1,49 +1,37 @@
-<%= simple_form_for @landing, html: {class: 'form-horizontal well', multipart: true} do |f| %>
-  <%= f.error_messages %>
-
-	<%= f.input :title, label: "Page Title" %>
+<%= simple_form_for @landing, html: {class: 'form-horizontal well'} do |f| %>
+  <%= f.error_notification %>
+  <div class="form-group">
+    <%= f.label :title, "Page Title", class: 'col-sm-2 control-label' %>
+    <div class="col-sm-10">
+      <%= f.input :title, autofocus: true, label: false, input_html: { class: 'form-control' } %>
+    </div>
+  </div>
 	<% unless @landing.new_record? %>
-  	<%= f.input :page_url, label: "Page URL" %>
+    <div class="form-group">
+      <%= f.label :page_url, "Page URL", class: 'col-sm-2 control-label' %>
+      <div class="col-sm-10">
+        <%= f.input :page_url, label: false, input_html: { class: 'form-control' } %>
+      </div>
+    </div>
 	<% end %>
-  <%= f.input :status, collection: ["draft", "published"], label_method: :titleize, include_blank: false %>
-	<%= f.input :description, label: "Top Description", input_html: {class: 'span6', rows: 10} %>
-	<%= f.input :publish_date, :as => :string, input_html: {data: { behaviour: 'datepicker'}} %>
-	<%= f.input :background, label: "Description BG" %>
-	<%= hidden_field_tag :previous_background_id, "", id: "previous_background" %>
-	<div class="control-group">
-		<label class="control-label"></label>
-		<div class="controls" id="select_previous">
-			or&nbsp;
-			<%= link_to "Select from previously uploaded", "#modal_previous_images", "data-toggle" => "modal" %>
-			<span id="selected_previous"></span>
-		</div>
-	</div>
-	<% unless @landing.new_record? %>
-		<div class="control-group">
-			<label class="control-label">Current Image</label>
-			<div class="controls">
-				<%= image_tag @landing.background.url(:thumb) %>
-			</div>
-		</div>
-	<% end %>
-	
-	<%= f.input :features, label: "Features (HTML)", input_html: {class: 'span6', rows: 10} %>
+  <div class="form-group">
+    <%= f.label :status, "Status", class: 'col-sm-2 control-label' %>
+    <div class="col-sm-10">
+      <%= f.input :status, collection: ["draft", "published"], label: false, include_blank: false, input_html: { class: 'form-control' } %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :publish_date, "Publish Date", class: 'col-sm-2 control-label' %>
+    <div class="col-sm-10">
+      <%= f.input :publish_date, as: :string, label: false, input_html: { class: 'form-control', data: { provide: 'datepicker', date_format: "yyyy-mm-dd"}} %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :content, "Content (HTML)", class: 'col-sm-2 control-label' %>
+    <div class="col-sm-10">
+      <%= f.input :content, label: false, input_html: { class: 'form-control',rows: 20} %>
+    </div>
+  </div>
   <hr/>
-  <%= f.input :mailing_list_subscribing %>
-  <%= f.input :with_coupon %>
-  <%= f.input :mailing_list_id, label: "Mailing List ID" %>
-  <%= f.button :wrapped, class: 'btn btn-primary', cancel: landings_path, value: "Save Landing Page" %>
-<% end %>
-
-<%= bootstrap_modal_dialog id: "modal_previous_images" do %>
-  <%= bootstrap_modal_header do %>
-    <h3>Background images from other landing pages</h3>
-  <% end %>
-  <%= bootstrap_modal_body do %>
-    <% Landing.scoped.each do |page| %>
-			<% if page.background? %>
-				<%= image_tag page.background.url(:thumb), class: "previous_background_img", id: "#{page.id}_bg" %>
-			<% end %>
-		<% end %>
-  <% end %>
+  <%= f.submit "Save Landing Page", class: 'btn btn-primary' %>
 <% end %>

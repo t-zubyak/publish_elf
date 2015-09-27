@@ -1,15 +1,1 @@
-<%= content_for :name do %>
-  <%= content_tag :h1, @landing.title %>
-<% end %>
-
-<%= content_for :description do %>
-  <%= raw @landing.description %>
-<% end %>
-
-<%= content_for :background do %>
-  <%= @landing.background.url(:xlarge) %>
-<% end %>
-
-<%= content_for :features do %>
-  <%= raw @landing.features %>
-<% end %>
+<%= raw @landing.content %>
