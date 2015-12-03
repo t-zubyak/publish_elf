@@ -1,9 +1,12 @@
+<p class="pull-right back_to_all">
+  <%= link_to "Back to all posts", blogposts_path %>
+</p>
 <div class="row">
-  <div class="col-md-12 blog-container">
+  <div class="col-md-12 blog-item">
     <h1><%= @post.title %></h1>
     <%= render @post %>
     <% unless @post.tag_list.blank? %>
-      <p><strong>Tags:</strong>
+      <p><br><strong>Tags:</strong>
         <% @post.tag_list.each do |tag| %>
           <%= link_to tag, "/blog/tags/#{tag.parameterize}" %>&nbsp; &nbsp;
         <% end %>
@@ -39,9 +42,5 @@
         </script>
         <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
         <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-
-    <p>
-    <%= link_to "Back to all posts", blogposts_path %>
-    </p>
   </div>
 </div>

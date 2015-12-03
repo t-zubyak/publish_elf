@@ -3,14 +3,14 @@ module PublishElf
 
     layout :resolve_layout
 
-    before_filter :authenticate_user!, :except => [:index, :show]
-    before_filter :verify_publisher, except: [:index, :show]
+    before_filter :authenticate_user!, :except => [:show]
+    before_filter :verify_publisher, except: [:show]
 
     def index
       if current_user
-        @landings = current_user.publisher? ? LandingPage.all : LandingPage.published
+        @landings = LandingPage.all
       else
-        redirect_to root_path
+        redirect_to main_app.root_path
       end
     end
 
@@ -64,7 +64,11 @@ module PublishElf
     end
 
     def page_params
-      params.require(:landing_page).permit(:title, :status, :publish_date, :content, :page_url)
+      params.require(:landing_page).permit(:title, :status, :publish_date, :content, :page_url, :background, :description)
+    end
+
+    def verify_publisher
+      redirect_to main_app.root_path unless current_user.publisher?
     end
 
   end

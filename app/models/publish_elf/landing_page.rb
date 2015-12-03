@@ -1,7 +1,5 @@
 module PublishElf
   class LandingPage < ActiveRecord::Base
-#    attr_accessible :description, :features, :page_url, :status, :title, :background, :publish_date, :mailing_list_subscribing, :mailing_list_id, :with_coupon
-
     self.table_name = 'publish_elf_landing_pages'
 
     validates :page_url, :title, :status, :content, :publish_date, presence: true

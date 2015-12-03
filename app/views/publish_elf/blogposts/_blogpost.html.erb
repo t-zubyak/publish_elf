@@ -1,3 +1,4 @@
+<div class="item-head">
     <span><i class="fa fa-user"></i> by <a href="/blog/by/<%= blogpost.user.try(:full_name).try(:parameterize) %>"><%= blogpost.user.try(:full_name) %></a></span>
   <% if blogpost.published? %>
     <span><i class="fa fa-calendar"></i> on <%= blogpost.posted_on.strftime('%b %e, %Y') %>  </span>
@@ -7,8 +8,9 @@
     <span><i class="fa fa-calendar"></i> <em>Will be published on <%= blogpost.posted_on.strftime('%b %e, %Y') %></em> </span>
   <% end %>
 
-  <%= content_tag(:small, link_to('Edit', edit_blogpost_path(blogpost))) if can? :edit, blogpost %>
-  <div class="separator bottom"></div>
+  <%= content_tag(:small, link_to('Edit', edit_blogpost_path(blogpost), class: "head-link")) if can? :edit, blogpost %>
+</div>
+  <div class="separator"></div>
 
   <div class="blog">
   <%= render blogpost.body %>

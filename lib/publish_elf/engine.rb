@@ -1,3 +1,9 @@
+require 'acts-as-taggable-on'
+require 'will_paginate'
+require 'acts-as-taggable-on'
+require 'bootstrap-datepicker-rails'
+require 'font-awesome-rails'
+
 module PublishElf
   class Engine < ::Rails::Engine
     isolate_namespace PublishElf

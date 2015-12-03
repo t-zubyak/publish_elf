@@ -4,7 +4,7 @@ module PublishElf
     helper_method :render_404, :verify_publisher
 
     def verify_publisher
-      redirect_to root_path unless current_user.publisher?
+      redirect_to main_app.root_path unless current_user.publisher?
     end
 
     def render_404

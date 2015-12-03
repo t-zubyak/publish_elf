@@ -4,7 +4,7 @@ module PublishElf
     before_filter :authenticate_user!, except: [:index, :show]
     before_filter :verify_publisher, except: [:index, :show]
 
-    layout 'public'
+    layout 'blog'
 
     def index
       if current_user && current_user.publisher?

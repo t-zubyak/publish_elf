@@ -15,16 +15,15 @@
       <div class="alert alert-info">There are no posts yet, check back soon!</div>
     <% else %>
       <% @posts.each_with_index do |post, i| %>
-        <div class="widget widget-heading-simple widget-body-white">
-      		<div class="widget-body">
-      			<div class="row">
-      				<div class="col-md-12 blog">
-      					<h2><%= link_to post.title, post %></h2>
-      					<%= render "short_post", post: post %>
-                <%= link_to "Read - #{post.title}", post, class: "btn btn-primary" %>
-      				</div>
-      			</div>
-      		</div>
+        <div class="blog-item">
+    			<div class="row">
+    				<div class="col-md-12">
+    					<h2><%= link_to post.title, post %></h2>
+    					<%= render "short_post", post: post %>
+              <br>
+              <%= link_to "Read - #{post.title}", post, class: "btn btn-primary" %>
+    				</div>
+    			</div>
       	</div>
       <% end %>
       <%= will_paginate @posts %>

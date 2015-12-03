@@ -1,1 +1,15 @@
-<%= raw @landing.content %>
+<%= content_for :name do %>
+  <%= content_tag :h1, @landing.title %>
+<% end %>
+
+<%= content_for :description do %>
+  <%= raw @landing.description %>
+<% end %>
+
+<%= content_for :content do %>
+  <%= raw @landing.content %>
+<% end %>
+
+<%= content_for :background do %>
+  <%= @landing.background %>
+<% end %>

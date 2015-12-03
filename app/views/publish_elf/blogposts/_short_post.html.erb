@@ -1,13 +1,15 @@
-<span><i class="fa fa-user"></i> by <a href="/blog/by/<%= post.user.try(:full_name).try(:parameterize) %>"><%= post.user.try(:full_name) %></a></span>
-<% if post.published? %>
-<span><i class="fa fa-calendar"></i> on <%= post.posted_on.strftime('%b %e, %Y') %>  </span>
-<% elsif post.status == 'draft' %>
-<em>Draft</em>
-<% else %>
-<span><i class="fa fa-calendar"></i> <em>Will be published on <%= post.posted_on.strftime('%b %e, %Y') %></em> </span>
-<% end %>
+<div class="item-head">
+  <span><i class="fa fa-user"></i> by <a href="/blog/by/<%= post.user.try(:full_name).try(:parameterize) %>"><%= post.user.try(:full_name) %></a></span>
+  <% if post.published? %>
+  <span><i class="fa fa-calendar"></i> on <%= post.posted_on.strftime('%b %e, %Y') %>  </span>
+  <% elsif post.status == 'draft' %>
+  <em>Draft</em>
+  <% else %>
+  <span><i class="fa fa-calendar"></i> <em>Will be published on <%= post.posted_on.strftime('%b %e, %Y') %></em> </span>
+  <% end %>
+  <%= content_tag(:small, link_to('Edit', edit_blogpost_path(post), class: "head-link")) if can? :edit, post %>  
+</div>
 
-<%= content_tag(:small, link_to('Edit', edit_blogpost_path(post))) if can? :edit, post %>
-<div class="separator bottom"></div>
+<div class="separator"></div>
 
 <%= wrap_images_with_links( render_short_post_body(post.body), post ).html_safe %>
