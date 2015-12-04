@@ -6,5 +6,5 @@ PublishElf::Engine.routes.draw do
       get :sign_s3
     end
   end
-  resources :landing_pages, :path => 'welcome'
+  resources :landing_pages, :path => 'for'
 end
